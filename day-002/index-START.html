@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS + CSS Clock</title>
+    <base href="../starters/JS30/02%20-%20JS%20and%20CSS%20Clock/" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+    <style></style>
+
+    <script>
+      const secondHand = document.querySelector('.second-hand');
+      const minuteHand = document.querySelector('.min-hand');
+      const hoursHand = document.querySelector('.hour-hand');
+      function setDate() {
+        const now = new Date();
+        const degreeTransformOffset = 90;
+        // Get secs
+        // Turn to degrees
+        const seconds = now.getSeconds();
+        let secondsDegrees = (seconds / 60) * 360 + degreeTransformOffset; // because we translated 90deg before
+        // There is a little skip from 0 to 90deg. This fixes it
+        secondsDegrees %= 360;
+        // console.log(seconds);
+        secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+        // Get mins
+        const minutes = now.getMinutes();
+        let minuteDegrees = (minutes / 60) * 360 + degreeTransformOffset;
+        minuteDegrees %= 360;
+        // console.log('minutes', minutes);
+        minuteHand.style.transform = `rotate(${minuteDegrees}deg)`;
+        // Get hours
+        const hours = now.getHours();
+        // console.log('hours', hours); -- Excellent, 24hr format
+        let hourAmOrPm = hours % 12;
+        let hourDegrees = (hourAmOrPm / 12) * 360 + degreeTransformOffset;
+        hourDegrees %= 360;
+        // console.log('hourDegrees', hourDegrees);
+        hoursHand.style.transform = `rotate(${hourDegrees}deg)`;
+      }
+      setInterval(setDate, 1000);
+    </script>
+  </body>
+</html>
